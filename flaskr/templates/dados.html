@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="../static/css/estilo.css" />
+   <title>IpCalc</title>
+</head>
+<body>
+<div class="container">
+<div class="asd col-md-6 col-md-offset-3">
+   
+   <div class="row">
+      <div class="cabecalho text-center">
+         <h1 class="titulo">Home.io</h1>
+      </div>
+   </div>
+   <div class="row">
+     <div class="corpo">
+      <form class="form-horizontal" action = "http://localhost:5000/env" method = "POST">
+         <div class="form-group">
+         {% for key, value in env.iteritems() %}
+               <div class=" div-input col-sm-12">
+               <label for="exampleInputEmail1">{{ key }}</label>
+               <input value="{{ value }}" type="text" class="input form-control" id="inputEmail3" placeholder="Digite o IP" name="numIP">
+            </div>
+         {% endfor %}   
+         </div>
+         </form>
+     </div>
+   </div>
+   <div class="row footer">
+      <footer class="">
+         <div class="devs col-xs-4 text-center">
+            <p>Desenvolvido por:</p>
+            <p>Esdras Dutra</p>
+            <p>Pedro Pimentel</p>
+            <p>Sandro Silva</p>
+         </div>
+         <div class="inst col-xs-4 text-center">
+            <p>Ufopa</p>
+            <p>IEG</p>
+            <p>Programa de Computação</p>
+            <p>Módulo de Redes de Computadores I</p>
+         </div>
+         <div class="col-xs-4 text-center"><img class="img-responsive" src="../static/img/ufopa-logo.png"></div>
+         
+      </footer>
+   </div>
+ </div>
+</div>
+   
+      
+</body>
+
+
+<style type="text/css">
+   body{
+         background: url(../static/img/ufopa.png) repeat;
+   }
+   .cabecalho{
+      background: rgba(53,108,51,251);
+      color: white;
+      border-top-left-radius:5px;
+      border-top-right-radius: 5px;
+
+   }
+   .titulo{
+      margin: 0px;
+      padding: 10px;
+   }
+   .devs{
+      margin-top:25px;
+   }
+   .inst{
+      margin-top:15px
+   }
+   .devs p, .inst p{
+      margin: 0px
+   }
+   .corpo{
+      height: 290px;
+   }
+   .div-input{
+      padding: 30px;
+   }
+   .row{
+      margin:0px;
+   }
+   .asd{
+      background: rgba(53,108,51,0.70);
+      /*border-top-right-radius: 10px;
+      border-top-left-radius: 10px;*/
+      border-radius: 10px;
+      padding: 0px;
+   }
+   .footer{
+      background: rgba(53,75,146,0.85);
+      color:white;
+      font-size: 12px;
+      padding: 10px;
+      margin: 0px;
+      /*border-radius: 10px;*/
+      border-bottom-left-radius:5px;
+      border-bottom-right-radius: 5px;
+   }
+</style>
+</html>

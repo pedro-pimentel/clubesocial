@@ -21,17 +21,33 @@ db = SQLAlchemy(app)
 ##############################Classes importantes##########################
 
 
-class Rooms(db.Model):
+class Pessoa(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    addresses = db.relationship('Devices', backref='rooms', lazy='dynamic')
+    CPF = db.Column(db.String(50))
+    nome = db.Column(db.String(50))
+    endereco = db.Column(db.String(50))
+    contato = db.Column(db.String(50))
+    data_nasc = db.Column(db.String(50))
+    status = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    senha = db.Column(db.String(50))
+    addresses = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
+    addresses = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
 
-class Devices(db.Model):
+class Dependente(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
-    pin = db.Column(db.Integer)
+    nome = db.Column(db.String(50))
     name = db.Column(db.Integer)
     status = db.Column(db.Integer)
-    id_room = db.Column(db.Integer, db.ForeignKey('rooms.id_'))
+    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+
+class Mensalidade(db.Model):
+    id_ = db.Column(db.Integer, primary_key=True)
+    valor = db.Column(db.Integer)
+    data_pagamento = db.Column(db.DateTime)
+    valor_pago = db.Column(db.Integer)
+    mensalidade = db.Column(db.String(50))
+    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 ####################################################################
 ####################################################################

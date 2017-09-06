@@ -33,6 +33,7 @@ class Pessoa(db.Model):
     senha = db.Column(db.String(50))
     addresses = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
     addresses = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
+    addresses = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
 
 class Dependente(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
@@ -47,6 +48,13 @@ class Mensalidade(db.Model):
     data_pagamento = db.Column(db.DateTime)
     valor_pago = db.Column(db.Integer)
     mensalidade = db.Column(db.String(50))
+    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+
+class Solicitacao(db.Model):
+    id_ = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.DateTime)
+    texto = db.Column(db.String(50))
+    status = db.Column(db.String(50)) #Status = aprovado, em andamento, recusado
     id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 ####################################################################
@@ -68,7 +76,7 @@ def index():
 @app.route('/login',  methods=['POST', 'GET'])
 def devices():
 	if request.method == 'POST':
-		email = Devices.query.filter_by(id_room= request.form['email']).all()
+		email = Pessoa.query.filter_by(login= request.form['email']).all()
 		comodo = Rooms.query.filter_by(id_= request.form['senha']).all()
 		
 		

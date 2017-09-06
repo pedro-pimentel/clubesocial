@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+-->
+<head>
+<title>Home.io</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+	<!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
+	
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}" />         <!-- phantom library, needed for Cordova api calls, added during build -->
+	<script src="{{url_for('static', filename='lib/jquery.min.js')}}"></script>  <!-- recommended location of your JavaScript code relative to other JS files -->
+	<!-- <script src="{{url_for('static', filename='js/app.js')}}"></script>   normalizes device and document ready events, see README for details -->
+	<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/nav_get_comodos_script.js')}}"></script>
+
+</head>
+
+<body>
+
+	<!-- Menu  -->
+	<nav class="navbar navbar-inverse" id="menu">
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="/index"><i class="glyphicon glyphicon-lamp"></i> Home.io</a>
+			</div>
+
+			<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-2" aria-expanded="false">
+				
+				<ul class="nav navbar-nav">
+
+<!--
+						  <li>
+								<a href="comodos.html?id=1">Sala</a>
+						  </li>
+						  <li>
+								<a href="#">Cozinha</a>
+						  </li>
+						  <li>
+								<a href="#">Quarto</a>
+						  </li>
+		  
+						-->
+					</ul>
+
+				</div>
+				
+			</div>
+
+		</nav>
+
+		<div class="container" id="conteudo">
+
+			<div class="row">
+				
+				
+				<div class="col-xs-12">
+
+					<div class="jumbotron">
+						<h3>Projeto de Eletrônica Digital</h3>
+						<p><strong>Objetivo: </strong> Desenvolver um aplicativo, conectado em um servidor de controle que poderá ser acessado remotamente, utilizando os conceitos de domótica, experimentalmente para acender LEDs, simulando os cômodos da residência. </p>
+						<p><strong>Integrantes: </strong></p>
+						<p>- Judison Godinho</p>
+						<p>- Sandro Oliveira</p>
+						<p>- Pedro Paulo</p>
+						<p><a class="btn btn-info btn-block btn-lg" id="mais-info" href="/info">Mais Informações</a></p>
+					</div>
+
+				</div>
+				
+			</div>
+
+		</div>
+
+	</body>
+	</html>

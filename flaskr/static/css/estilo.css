@@ -1,0 +1,22 @@
+#header {
+	padding: 4rem;
+	background: url('../img/background.png');
+}
+#title-site{
+	margin-top: 4rem; 
+}
+.title{
+	margin: 4rem 0;
+}
+
+#form input, #form textarea{
+	margin: 0.2rem 0 1rem;
+}
+
+#footer{
+	margin: 2rem 0 0;
+	padding: 4rem;
+	text-align: center;
+	background: #444;
+	color: #fff;
+}

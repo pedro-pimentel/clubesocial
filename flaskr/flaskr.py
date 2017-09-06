@@ -3,8 +3,8 @@
 
 ################ Bibliotecas utilizadas ##########################
 
-from subprocess import Popen, PIPE
-from classes.Home import Device
+#from subprocess import Popen, PIPE
+#from classes.Home import Device
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -49,14 +49,13 @@ def index():
 ##################################################################
 #########Funcao para mandar o json para o aplicativo com os dispositivos###############
 
-@app.route('/devices',  methods=['POST', 'GET'])
+@app.route('/login',  methods=['POST', 'GET'])
 def devices():
 	if request.method == 'POST':
-		dispositivos = []
-		disp = Devices.query.filter_by(id_room= request.form['id']).all()
-		comodo = Rooms.query.filter_by(id_= request.form['id']).all()
-		for i in disp:
-			dispositivos.append(dict(id=i.id_, name='{0} - [{1}]'.format(i.name, i.pin), status=i.status))
+		email = Devices.query.filter_by(id_room= request.form['email']).all()
+		comodo = Rooms.query.filter_by(id_= request.form['senha']).all()
+		
+		
 		return jsonify([{'comodo':c.__dict__.get('name') for c in comodo},{"aparelhos": dispositivos }])
 
 ##################################################################

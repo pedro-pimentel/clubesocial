@@ -1,87 +1,128 @@
 <!DOCTYPE html>
 <html>
-<!--
-  * Please see the included README.md file for license terms and conditions.
--->
 <head>
-<title>Home.io</title>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-
-	<!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
-	
-	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" />
-	<link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}" />         <!-- phantom library, needed for Cordova api calls, added during build -->
-	<script src="{{url_for('static', filename='lib/jquery.min.js')}}"></script>  <!-- recommended location of your JavaScript code relative to other JS files -->
-	<!-- <script src="{{url_for('static', filename='js/app.js')}}"></script>   normalizes device and document ready events, see README for details -->
-	<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
-	<script src="{{url_for('static', filename='js/nav_get_comodos_script.js')}}"></script>
-
+	<meta charset="utf-8">
+	<title>Clube Social - Solicitar Associação</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app.css')}}">
+	<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
 </head>
-
 <body>
-
-	<!-- Menu  -->
-	<nav class="navbar navbar-inverse" id="menu">
-		<div class="container-fluid">
-
-			<div class="navbar-header">
-
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-
-				<a class="navbar-brand" href="/index"><i class="glyphicon glyphicon-lamp"></i> Home.io</a>
-			</div>
-
-			<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-2" aria-expanded="false">
-				
-				<ul class="nav navbar-nav">
-
-<!--
-						  <li>
-								<a href="comodos.html?id=1">Sala</a>
-						  </li>
-						  <li>
-								<a href="#">Cozinha</a>
-						  </li>
-						  <li>
-								<a href="#">Quarto</a>
-						  </li>
-		  
-						-->
-					</ul>
-
-				</div>
-				
-			</div>
-
-		</nav>
-
-		<div class="container" id="conteudo">
-
+	<header id="header">
+		<div class="container">
 			<div class="row">
-				
-				
-				<div class="col-xs-12">
+				<div class="col-md-3">
+					<img src="../static/img/logo.png" class="img-fluid">
+				</div>
+				<div class="col-md-9">
+					<h1 id="title-site" class="display-1">Clube Social</h1>
+				</div>
+			</div>
+		</div>
+	</header>
 
-					<div class="jumbotron">
-						<h3>Projeto de Eletrônica Digital</h3>
-						<p><strong>Objetivo: </strong> Desenvolver um aplicativo, conectado em um servidor de controle que poderá ser acessado remotamente, utilizando os conceitos de domótica, experimentalmente para acender LEDs, simulando os cômodos da residência. </p>
-						<p><strong>Integrantes: </strong></p>
-						<p>- Judison Godinho</p>
-						<p>- Sandro Oliveira</p>
-						<p>- Pedro Paulo</p>
-						<p><a class="btn btn-info btn-block btn-lg" id="mais-info" href="/info">Mais Informações</a></p>
-					</div>
+	<nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<!-- <a class="navbar-brand" href="#">Início</a> -->
+	  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    		<span class="navbar-toggler-icon"></span>
+	  		</button>
 
+	  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    		<ul class="navbar-nav mr-auto">
+	      			<li class="nav-item ">
+	        			<a class="nav-link" href="#">Home</a>
+	      			</li>
+	     			<li class="nav-item active">
+	        			<a class="nav-link" href="#">Solicitar associação <span class="sr-only">(current)</span></a>
+	      			</li>
+	      			<li class="nav-item">
+	        			<a class="nav-link disabled" href="#">Sobre</a>
+	      			</li>
+	    		</ul>
+	    	<form class="form-inline my-2 my-lg-0" action = "/login" method = "POST">
+	      		<input class="form-control mr-sm-1" type="email" name="email" placeholder="E-mail" aria-label="Search">
+	      		<input class="form-control mr-sm-1" type="password" name="senha" placeholder="Senha" aria-label="Search">
+	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar</button>
+	    	</form>
+    	</div>
+  	</div>
+	  
+	</nav>
+
+	<div class="container" id="container">
+		<div class="row">
+			<div class="col"><h1 class="title">Formulário de solitação para ser sócio</h1></div>
+		</div>
+		<form id="form" method="post">
+		  	<div class="row">
+		   	 	<div class="col">
+		   	 		<label class="form-control-label" for="inputNome">Nome Completo</label>
+		      		<input type="text" class="form-control" id="inputNome" name="nome" placeholder="Nome Completo">
+		    	</div>
+		    	<div class="col">
+		      		<label class="form-control-label" for="inputEmail">E-mail</label>
+		      		<input type="email" class="form-control" id="inputEmail" name="email" placeholder="fulano@ciclano.com">
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col">
+		      		<label class="form-control-label" for="inputEndereco">Endereço</label>
+		      		<input type="text" class="form-control" id="inputEndereco" name="endereco" placeholder="Av. Fulano de Tal, 422, Bairro do Ciclano">
+		    	</div>
+
+		    	<div class="col">
+		      		<label class="form-control-label" for="inputContato">Contato</label>
+		      		<input type="tel" class="form-control" id="inputContato" name="contato" placeholder="(93)25835-5869">
+		    	</div>
+		  	</div>
+			<div class="row">
+				<div class="col">
+				 	<label class="form-control-label" for="inputContato">RG</label>
+			  		<input type="tel" class="form-control" id="inputRG" name="rg" placeholder="Digite seu numero de RG">
+				</div>
+				<div class="col">
+			  		<label class="form-control-label" for="inputCPF">CPF</label>
+			  		<input type="text" class="form-control" id="inputCPF" name="cpf" placeholder="000.000.000-00">
+				</div>
+				<div class="col">
+			  		<label class="form-control-label" for="inputRenda">Renda</label>
+			  		<input type="text" class="form-control" id="inputRenda" name="renda" placeholder="Digite sua renda">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+				 	<label class="form-control-label" for="inputProfissao">Profissão</label>
+			  		<input type="tel" class="form-control" id="inputProfissao" name="profissao" placeholder="Sua profissão">
+				</div>
+				<div class="col">
+			  		<label class="form-control-label" for="inputTrabalho">Local de Trabalho</label>
+			  		<input type="text" class="form-control" id="inputTrabalho" name="trabalho" placeholder="Nome da empresa">
 				</div>
 				
+
 			</div>
+			<div class="row">
+				<div class="col">
+				 	<label class="form-control-label" for="inputMensagem">Mensagem</label>
+			  		<textarea class="form-control" id="inputMensagem" name="mensagem"></textarea>
+				</div>
+			</div>
+			<div class="row justify-content-md-center" >
+				<input type="submit" class="btn btn-outline-primary" value="Enviar Solitação"></input>
+			</div>
+		</form>
+	</div>
 
-		</div>
+	<footer id="footer">
+		<p>
+			Desenvolvido por Judison Godinho e Pedro Paulo
+		</p>
+		<p>
+			Todos os direitos reservados
+		</p>
+	</footer>
 
-	</body>
-	</html>
+</body>
+</html>

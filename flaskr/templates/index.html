@@ -4,9 +4,13 @@
 	<meta charset="utf-8">
 	<title>Clube Social - Solicitar Associação</title>
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/app.css')}}">
-	<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
-	<script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/estilo.css')}}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<!-- <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script> -->
+	<!-- <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script> -->
 </head>
 <body>
 	<header id="header">
@@ -40,12 +44,11 @@
 	      			<li class="nav-item">
 	        			<a class="nav-link disabled" href="#">Sobre</a>
 	      			</li>
+	      			<li class="nav-item">
+						
+	      			</li>
 	    		</ul>
 	    	<form class="form-inline my-2 my-lg-0" action = "/login" method = "POST">
-	    				{% for key in pessoa %}
-							<option value="{{ key.id_ }}">{{ key.nome }}</option>
-							<h1>{{ key.nome }}</h1>
-						{% endfor %}
 	    		
 	      		<input class="form-control mr-sm-1" type="email" name="email" placeholder="E-mail" aria-label="Search">
 	      		<input class="form-control mr-sm-1" type="password" name="senha" placeholder="Senha" aria-label="Search">
@@ -57,10 +60,17 @@
 	</nav>
 
 	<div class="container" id="container">
+		
 		<div class="row">
+
 			<div class="col"><h1 class="title">Formulário de solitação para ser sócio</h1></div>
 		</div>
-		<form id="form" method="post">
+		<div class="row">
+			{% for message in get_flashed_messages() %}
+				{{ message }}
+			{% endfor %}
+		</div>
+		<form id="form" method="post" action = "/solicitacao">
 		  	<div class="row">
 		   	 	<div class="col">
 		   	 		<label class="form-control-label" for="inputNome">Nome Completo</label>
@@ -129,5 +139,10 @@
 		</p>
 	</footer>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".alert").alert();
+		})
+	</script>
 </body>
 </html>

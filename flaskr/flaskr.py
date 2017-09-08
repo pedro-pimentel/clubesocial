@@ -5,7 +5,7 @@
 
 #from subprocess import Popen, PIPE
 #from classes.Home import Device
-from flask import Flask, request, session, g, redirect, url_for, abort, \
+from flask import Flask, request, session, g, Markup, redirect, url_for, abort, \
      render_template, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import socket
@@ -24,7 +24,7 @@ db = SQLAlchemy(app)
 
 class Pessoa(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
-    CPF = db.Column(db.String(50))
+    cpf = db.Column(db.String(50))
     nome = db.Column(db.String(50))
     endereco = db.Column(db.String(50))
     contato = db.Column(db.String(50))
@@ -32,6 +32,10 @@ class Pessoa(db.Model):
     status = db.Column(db.String(50))
     email = db.Column(db.String(50))
     senha = db.Column(db.String(50))
+    rg = db.Column(db.String(50))
+    profissao = db.Column(db.String(50))
+    trabalho = db.Column(db.String(50))
+    renda = db.Column(db.Integer)
     dependente = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
     mensalidade = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
     solicitacao = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
@@ -54,9 +58,9 @@ class Mensalidade(db.Model):
 class Solicitacao(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.DateTime)
-    texto = db.Column(db.String(50))
+    mensagem = db.Column(db.String(50))
     status = db.Column(db.String(50)) #Status = aprovado, em andamento, recusado
-    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+    id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 ####################################################################
 ####################################################################
@@ -92,6 +96,9 @@ def login():
 	if request.method == 'POST':
 		email = request.form['email']
 		senha = request.form['senha']
+		email_data = None
+		senha_data = None
+		nome_data  = None
 		#user = Pessoa.select().where(Pessoa.email == email).first()
 		pessoa = Pessoa.query.filter_by(email=email).all()
 		for i in pessoa:
@@ -103,7 +110,9 @@ def login():
 			session['username'] = nome_data
 			return render_template('teste.html', pessoa = pessoa)
 		else:
-			return render_template('index.html', mensagem = "Login inválido!")
+			message = Markup("<h1>Login inválido</h1>")
+			flash(message)
+			return render_template('index.html')
 		#login = Pessoa.query.filter_by(senha= senha)
 		#if login.email == email and login.senha == senha:
 		#	session['username'] = login.nome
@@ -138,6 +147,40 @@ def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
     return render_template('index.html')
+
+
+
+#################################################################################
+###############################Funcao solicitacao################################
+
+
+@app.route('/solicitacao', methods=['POST', 'GET'])
+def solicitacao():
+
+	if request.method == 'POST':
+		nome      = request.form['nome']
+		email     = request.form['email']
+		endereco  = request.form['endereco']
+		contato   = request.form['contato']
+		rg        = request.form['rg']
+		cpf       = request.form['cpf']
+		renda     = request.form['renda']
+		profissao = request.form['profissao']
+		trabalho  = request.form['trabalho']
+		mensagem  = request.form['mensagem']
+
+		pessoa = Pessoa(nome=nome,email=email,endereco=endereco, contato=contato, rg = rg, cpf = cpf, renda = renda, profissao = profissao, trabalho = trabalho)
+		db.session.add(pessoa)
+		db.session.commit()
+		id_last = pessoa.id_
+		solicitacao = Solicitacao(mensagem=mensagem, id_pessoa = id_last, status = "Pendente")
+		db.session.add(solicitacao)
+		db.session.commit()
+		message = Markup("<div class='col alert alert-success alert-dismissible fade show' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h4 class='alert-heading'>Cadastrado com sucesso!</h4><p>Iremos avaliar sua socilicitacao e enviaremos o resultado para seu e-mail.</p></div>")
+		flash(message)
+		return render_template('index.html')
+	else:
+		return render_template('index.html')
 
 #######################################)#########################
 ##################Funcao para trocar o status do dispositivo#####################

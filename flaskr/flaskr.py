@@ -8,11 +8,12 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
+import socket
 
 ###################################################################     
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ihome.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clube.sqlite3'
 app.config['SECRET_KEY'] = "random string"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
@@ -31,9 +32,9 @@ class Pessoa(db.Model):
     status = db.Column(db.String(50))
     email = db.Column(db.String(50))
     senha = db.Column(db.String(50))
-    addresses = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
-    addresses = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
-    addresses = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
+    dependente = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
+    mensalidade = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
+    solicitacao = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
 
 class Dependente(db.Model):
     id_ = db.Column(db.Integer, primary_key=True)
@@ -60,7 +61,7 @@ class Solicitacao(db.Model):
 ####################################################################
 ####################################################################
 #########Funcao de render do template index###################################
-@app.route('/')
+'''@app.route('/')
 def main():
 
 	return render_template('index.html')
@@ -68,36 +69,61 @@ def main():
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')'''
 
 ##################################################################
-#########Funcao para mandar o json para o aplicativo com os dispositivos###############
+#########Funcao de Login###############
+
+
+'''@app.route('/login', methods=['GET', 'POST'])
+def login():
+	if request.method == 'POST':
+		session['username'] = request.form['username']
+		return redirect(url_for('index'))
+	return 
+		#<form method="post">
+		#	<p><input type=text name=username>
+		#	<p><input type=submit value=Login>
+		#</form>
+'''
 
 @app.route('/login',  methods=['POST', 'GET'])
-def devices():
+def login():
 	if request.method == 'POST':
-		email = Pessoa.query.filter_by(login= request.form['email']).all()
-		comodo = Rooms.query.filter_by(id_= request.form['senha']).all()
-		
-		
-		return jsonify([{'comodo':c.__dict__.get('name') for c in comodo},{"aparelhos": dispositivos }])
+		email = request.form['email']
+		senha = request.form['senha']
+		#user = Pessoa.select().where(Pessoa.email == email).first()
+		pessoa = Pessoa.query.filter_by(email=email).all()
+		for i in pessoa:
+			asd = i.nome
+
+		#login = Pessoa.query.filter_by(senha= senha)
+		#if login.email == email and login.senha == senha:
+		#	session['username'] = login.nome
+		#return render_template('teste.html', pessoa = pessoa)
+		return asd
 
 ##################################################################
-###################Funcao para listar os comodos#############################
+###################Funcao de teste#############################
 
-@app.route('/room')
-def room():
-    c = Rooms.query.all()
-    comodos = []
-    if c:
-        for i in c:
-            comodos.append(dict(id=i.id_,nome=i.name))
-    return jsonify(comodos)
+@app.route('/logged')
+def logged():
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
+
+
+##################################################################
+##################Render Index########################################
+
+@app.route('/')
+def index():
+	return render_template('index.html')
 
 #######################################)#########################
 ##################Funcao para trocar o status do dispositivo#####################
 
-@app.route('/swap',  methods=['POST', 'GET'])
+'''@app.route('/swap',  methods=['POST', 'GET'])
 def swap():
 	if request.method == 'POST':
 		id_device = request.form['id']
@@ -164,15 +190,16 @@ def setPins():
 				disp.offDevice(dispositivo.pin)
 			else:
 				disp.onDevice(dispositivo.pin)
-
+'''
 if __name__ == '__main__':
     #app.run(debug = True)
     #Comando para buscar informações e filtrar o ip
     db.create_all()
     db.session.commit()
-    setPins()
-    cmd = "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"
-    p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+    #setPins()
+    #cmd = "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"
+    #p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
     #Recebendo o IP que está na placa no eth0
-    AdressIP, err = p.communicate()
+    #AdressIP, err = p.communicate()
+    AdressIP = socket.gethostbyname(socket.gethostname())
     app.run(host=AdressIP, port=5000, debug=True, threaded=True)

@@ -95,13 +95,22 @@ def login():
 		#user = Pessoa.select().where(Pessoa.email == email).first()
 		pessoa = Pessoa.query.filter_by(email=email).all()
 		for i in pessoa:
-			asd = i.nome
+			email_data = i.email
+			senha_data = i.senha
+			nome_data = i.nome
 
+		if((email_data == email) and (senha_data == senha)):
+			session['username'] = nome_data
+			return render_template('teste.html', pessoa = pessoa)
+		else:
+			return render_template('index.html', mensagem = "Login inválido!")
 		#login = Pessoa.query.filter_by(senha= senha)
 		#if login.email == email and login.senha == senha:
 		#	session['username'] = login.nome
 		#return render_template('teste.html', pessoa = pessoa)
 		return asd
+	else:
+		return render_template('index.html')
 
 ##################################################################
 ###################Funcao de teste#############################
@@ -109,7 +118,7 @@ def login():
 @app.route('/logged')
 def logged():
     if 'username' in session:
-        return 'Logged in as %s' % escape(session['username'])
+        return session['username']
     return 'You are not logged in'
 
 
@@ -119,6 +128,16 @@ def logged():
 @app.route('/')
 def index():
 	return render_template('index.html')
+
+
+#################################################################################
+#################################Logout##########################################
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return render_template('index.html')
 
 #######################################)#########################
 ##################Funcao para trocar o status do dispositivo#####################

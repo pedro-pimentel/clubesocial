@@ -42,6 +42,11 @@
 	      			</li>
 	    		</ul>
 	    	<form class="form-inline my-2 my-lg-0" action = "/login" method = "POST">
+	    				{% for key in pessoa %}
+							<option value="{{ key.id_ }}">{{ key.nome }}</option>
+							<h1>{{ key.nome }}</h1>
+						{% endfor %}
+	    		
 	      		<input class="form-control mr-sm-1" type="email" name="email" placeholder="E-mail" aria-label="Search">
 	      		<input class="form-control mr-sm-1" type="password" name="senha" placeholder="Senha" aria-label="Search">
 	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar</button>

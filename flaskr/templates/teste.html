@@ -18,7 +18,6 @@
 					<div class=" div-input col-sm-12">
 					<select name="cm" class="form-control">
 						<option value="">Selecione o cômodo</option>
-						{% dump(pessoa) %}
 						{% for key in pessoa %}
 							<option value="{{ key.id_ }}">{{ key.nome }}</option>
 						{% endfor %}

@@ -36,6 +36,7 @@ class Pessoa(db.Model):
     profissao = db.Column(db.String(50))
     trabalho = db.Column(db.String(50))
     renda = db.Column(db.Integer)
+    hierarquia = db.Column(db.Integer)
     dependente = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
     mensalidade = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
     solicitacao = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
@@ -96,18 +97,21 @@ def login():
 	if request.method == 'POST':
 		email = request.form['email']
 		senha = request.form['senha']
-		email_data = None
-		senha_data = None
-		nome_data  = None
+		email_data		= None
+		senha_data	= None
+		nome_data		= None
+		hierarquia_data	= None
 		#user = Pessoa.select().where(Pessoa.email == email).first()
 		pessoa = Pessoa.query.filter_by(email=email).all()
 		for i in pessoa:
-			email_data = i.email
-			senha_data = i.senha
-			nome_data = i.nome
+			email_data 	= i.email
+			senha_data 	= i.senha
+			nome_data 	= i.nome
+			hierarquia_data  = i.hierarquia
 
 		if((email_data == email) and (senha_data == senha)):
 			session['username'] = nome_data
+			session['h'] = hierarquia_data
 			return render_template('teste.html', pessoa = pessoa)
 		else:
 			message = Markup("<h1>Login inválido</h1>")
@@ -117,7 +121,7 @@ def login():
 		#if login.email == email and login.senha == senha:
 		#	session['username'] = login.nome
 		#return render_template('teste.html', pessoa = pessoa)
-		return asd
+		#return asd
 	else:
 		return render_template('index.html')
 
@@ -183,40 +187,11 @@ def solicitacao():
 		return render_template('index.html')
 
 #######################################)#########################
-##################Funcao para trocar o status do dispositivo#####################
-
-'''@app.route('/swap',  methods=['POST', 'GET'])
-def swap():
-	if request.method == 'POST':
-		id_device = request.form['id']
-		device = Devices.query.filter_by(id_=id_device).all()
-		status_device = request.form['estado']
-
-		for i in device:
-			pino = int(i.pin)
-		home = Device(pino)
-
-		if (status_device == '0'):
-			home.offDevice(pino)
-			for i in device:
-				i.status = int(status_device)
-				db.session.commit()
-				status = i.status
-
-		else:
-			home.onDevice(pino)
-			for i in device:
-				i.status = int(status_device)
-				db.session.commit()
-				status = i.status
+##################Funcao de aprovacao#####################
 
 
 
-		# aqui entra a funcao para verificar o estado do pino na placa
-		# return redirect(url_for('index'))
-	return jsonify(status=status)
-
-
+'''
 @app.route('/comodos')
 def comdos():
 	return render_template('comodos.html')

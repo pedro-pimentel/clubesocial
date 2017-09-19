@@ -6,11 +6,11 @@
 #from subprocess import Popen, PIPE
 #from classes.Home import Device
 from flask import Flask, request, session, g, Markup, redirect, url_for, abort, \
-     render_template, flash, jsonify
+	 render_template, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import socket
 
-###################################################################     
+###################################################################
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clube.sqlite3'
@@ -23,45 +23,46 @@ db = SQLAlchemy(app)
 
 
 class Pessoa(db.Model):
-    id_ = db.Column(db.Integer, primary_key=True)
-    cpf = db.Column(db.String(50))
-    nome = db.Column(db.String(50))
-    endereco = db.Column(db.String(50))
-    contato = db.Column(db.String(50))
-    data_nasc = db.Column(db.String(50))
-    status = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    senha = db.Column(db.String(50))
-    rg = db.Column(db.String(50))
-    profissao = db.Column(db.String(50))
-    trabalho = db.Column(db.String(50))
-    renda = db.Column(db.Integer)
-    hierarquia = db.Column(db.Integer)
-    dependente = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
-    mensalidade = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
-    solicitacao = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
+	id_ = db.Column(db.Integer, primary_key=True)
+	cpf = db.Column(db.String(50))
+	nome = db.Column(db.String(50))
+	endereco = db.Column(db.String(50))
+	contato = db.Column(db.String(50))
+	data_nasc = db.Column(db.String(50))
+	status = db.Column(db.String(50))
+	email = db.Column(db.String(50))
+	senha = db.Column(db.String(50))
+	rg = db.Column(db.String(50))
+	profissao = db.Column(db.String(50))
+	trabalho = db.Column(db.String(50))
+	renda = db.Column(db.Integer)
+	hierarquia = db.Column(db.Integer)
+	tipo = db.Column(db.String(50))
+	dependente = db.relationship('Dependente', backref='pessoa', lazy='dynamic')
+	mensalidade = db.relationship('Mensalidade', backref='pessoa', lazy='dynamic')
+	solicitacao = db.relationship('Solicitacao', backref='pessoa', lazy='dynamic')
 
 class Dependente(db.Model):
-    id_ = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(50))
-    name = db.Column(db.Integer)
-    status = db.Column(db.Integer)
-    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+	id_ = db.Column(db.Integer, primary_key=True)
+	nome = db.Column(db.String(50))
+	name = db.Column(db.Integer)
+	status = db.Column(db.Integer)
+	id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 class Mensalidade(db.Model):
-    id_ = db.Column(db.Integer, primary_key=True)
-    valor = db.Column(db.Integer)
-    data_pagamento = db.Column(db.DateTime)
-    valor_pago = db.Column(db.Integer)
-    mensalidade = db.Column(db.String(50))
-    id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+	id_ = db.Column(db.Integer, primary_key=True)
+	valor = db.Column(db.Integer)
+	data_pagamento = db.Column(db.DateTime)
+	valor_pago = db.Column(db.Integer)
+	mensalidade = db.Column(db.String(50))
+	id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 class Solicitacao(db.Model):
-    id_ = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.DateTime)
-    mensagem = db.Column(db.String(50))
-    status = db.Column(db.String(50)) #Status = aprovado, em andamento, recusado
-    id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+	id_ = db.Column(db.Integer, primary_key=True)
+	data = db.Column(db.DateTime)
+	mensagem = db.Column(db.String(50))
+	status = db.Column(db.String(50)) #Status = aprovado, em andamento, recusado
+	id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 ####################################################################
 ####################################################################
@@ -74,7 +75,7 @@ def main():
 
 @app.route('/index')
 def index():
-    return render_template('index.html')'''
+	return render_template('index.html')'''
 
 ##################################################################
 #########Funcao de Login###############
@@ -85,7 +86,7 @@ def login():
 	if request.method == 'POST':
 		session['username'] = request.form['username']
 		return redirect(url_for('index'))
-	return 
+	return
 		#<form method="post">
 		#	<p><input type=text name=username>
 		#	<p><input type=submit value=Login>
@@ -100,21 +101,22 @@ def login():
 		email_data		= None
 		senha_data	= None
 		nome_data		= None
-		hierarquia_data	= None
+		tipo_data	= None
 		#user = Pessoa.select().where(Pessoa.email == email).first()
 		pessoa = Pessoa.query.filter_by(email=email).all()
 		for i in pessoa:
 			email_data 	= i.email
 			senha_data 	= i.senha
 			nome_data 	= i.nome
-			hierarquia_data  = i.hierarquia
-
+			tipo_data  = i.tipo
+		return nome_data
 		if((email_data == email) and (senha_data == senha)):
 			session['username'] = nome_data
-			session['h'] = hierarquia_data
-			return render_template('teste.html', pessoa = pessoa)
+			session['h'] = tipo_data
+			return nome_data
+			#return redirect(url_for('adm'))
 		else:
-			message = Markup("<h1>Login inválido</h1>")
+			message = Markup("<h1>Login invalido</h1>")
 			flash(message)
 			return render_template('index.html')
 		#login = Pessoa.query.filter_by(senha= senha)
@@ -130,9 +132,9 @@ def login():
 
 @app.route('/logged')
 def logged():
-    if 'username' in session:
-        return session['username']
-    return 'You are not logged in'
+	if 'username' in session:
+		return session['username']
+	return 'You are not logged in'
 
 
 ##################################################################
@@ -148,9 +150,9 @@ def index():
 
 @app.route('/logout')
 def logout():
-    # remove the username from the session if it's there
-    session.pop('username', None)
-    return render_template('index.html')
+	# remove the username from the session if it's there
+	session.pop('username', None)
+	return render_template('index.html')
 
 
 
@@ -173,11 +175,11 @@ def solicitacao():
 		trabalho  = request.form['trabalho']
 		mensagem  = request.form['mensagem']
 
-		pessoa = Pessoa(nome=nome,email=email,endereco=endereco, contato=contato, rg = rg, cpf = cpf, renda = renda, profissao = profissao, trabalho = trabalho)
+		pessoa = Pessoa(nome=nome,email=email,endereco=endereco, contato=contato, rg = rg, cpf = cpf, renda = renda, profissao = profissao, trabalho = trabalho, tipo = "associado")
 		db.session.add(pessoa)
 		db.session.commit()
 		id_last = pessoa.id_
-		solicitacao = Solicitacao(mensagem=mensagem, id_pessoa = id_last, status = "Pendente")
+		solicitacao = Solicitacao(mensagem=mensagem, id_pessoa = id_last, status = "pendente")
 		db.session.add(solicitacao)
 		db.session.commit()
 		message = Markup("<div class='col alert alert-success alert-dismissible fade show' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><h4 class='alert-heading'>Cadastrado com sucesso!</h4><p>Iremos avaliar sua socilicitacao e enviaremos o resultado para seu e-mail.</p></div>")
@@ -189,7 +191,27 @@ def solicitacao():
 #######################################)#########################
 ##################Funcao de aprovacao#####################
 
-
+@app.route('/adm')
+def adm():
+	# remove the username from the session if it's there
+	if 'username' in session and ('h' == "adm"):
+		text = None
+		solicitacao = Solicitacao.query.filter_by(status="pendente").order_by(desc(data))
+		for i in solicitacao:
+			id_data 	= i.id_
+			pessoa = Pessoa.query.filter_by(id_=id_data).all()
+			for j in pessoa:
+				id_data = i.id_
+				nome_data = i.nome
+				email_data = i.email
+				text =+ "<tr><th scope='row'>3</th><td>"+ id_data +"</td><td>"+ nome_data +"</td><td>"+ email_data +"</td><td><a href='/solicitacao_abrir?id='"+ id_data +">Abrir</a></td></tr>"
+		message = Markup(text)
+		flash(message)
+		return render_template('lista.html')
+	else:
+		message = Markup("<h1>Voce precisa logar para acessar</h1>")
+		flash(message)
+		return render_template('index.html')
 
 '''
 @app.route('/comodos')
@@ -198,15 +220,15 @@ def comdos():
 
 @app.route('/info')
 def info():
-    return render_template('info.html')
+	return render_template('info.html')
 
 @app.route('/add_device', methods=['GET', 'POST'])
 def add_device():
-    if request.method == 'POST':
-        dispositivos = Devices(name=request.form['dispositivo'],pin=request.form['pin'],status=0, id_room=request.form['cm'])
-        db.session.add(dispositivos)
-        db.session.commit() 
-    return render_template('add_device.html', comodo = Rooms.query.all())
+	if request.method == 'POST':
+		dispositivos = Devices(name=request.form['dispositivo'],pin=request.form['pin'],status=0, id_room=request.form['cm'])
+		db.session.add(dispositivos)
+		db.session.commit()
+	return render_template('add_device.html', comodo = Rooms.query.all())
 
 @app.route('/add_room', methods=['GET', 'POST'])
 def add_room():
@@ -214,7 +236,7 @@ def add_room():
 		comodos = Rooms(name=request.form['comodo'])
 		db.session.add(comodos)
 		db.session.commit()
-	return render_template('add_room.html')		
+	return render_template('add_room.html')
 
 
 #@app.cli.command('initpin')
@@ -229,14 +251,14 @@ def setPins():
 				disp.onDevice(dispositivo.pin)
 '''
 if __name__ == '__main__':
-    #app.run(debug = True)
-    #Comando para buscar informações e filtrar o ip
-    db.create_all()
-    db.session.commit()
-    #setPins()
-    #cmd = "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"
-    #p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
-    #Recebendo o IP que está na placa no eth0
-    #AdressIP, err = p.communicate()
-    AdressIP = socket.gethostbyname(socket.gethostname())
-    app.run(host=AdressIP, port=5000, debug=True, threaded=True)
+	#app.run(debug = True)
+	#Comando para buscar informações e filtrar o ip
+	db.create_all()
+	db.session.commit()
+	#setPins()
+	#cmd = "ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"
+	#p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+	#Recebendo o IP que está na placa no eth0
+	#AdressIP, err = p.communicate()
+	AdressIP = socket.gethostbyname(socket.gethostname())
+	app.run(host=AdressIP, port=5000, debug=True, threaded=True)

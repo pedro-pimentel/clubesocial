@@ -75,8 +75,14 @@
 			    </tr>
 			</thead>
 			<tbody>
-				{% for message in get_flashed_messages() %}
-					{{ message }}
+				{% for m in pessoa %}
+				<tr>
+				    <th scope="row">{{ m.id_ }}</th>
+				    <td>{{ m.nome }}</td>
+				    <td>{{ m.email }}</td>
+
+				    <td> <a href="abrir/{{ m.id_ }}">Abrir</a></td>
+			    </tr>
 				{% endfor %}
 			</tbody>
 		</table>

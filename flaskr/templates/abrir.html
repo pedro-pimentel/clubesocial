@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% for m in pessoa %}
+		{{ m.nome }}
+		{{ m.email }}
+		{{ m.endereco }}
+		{{ m.cpf }}
+		{{ m.rg }}
+		{{ m.contato }}
+		{{ m.data_nasc }}
+		{{ m.data_nasc }}
+		{{ m.profissao }}
+		{{ m.trabalho }}
+		{{ m.renda }}
+		{{ m.renda }}
+	{% endfor %}
+	{% for s in solicitacao %}
+		{{ s.data }}
+		{{ s.mensagem }}
+	{% endfor %}
+</body>
+</html>

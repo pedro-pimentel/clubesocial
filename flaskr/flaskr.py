@@ -61,7 +61,7 @@ class Solicitacao(db.Model):
 	id_ = db.Column(db.Integer, primary_key=True)
 	data = db.Column(db.DateTime)
 	mensagem = db.Column(db.String(50))
-	status = db.Column(db.String(50)) #Status = aprovado, em andamento, recusado
+	status = db.Column(db.String(50)) #Status = aprovado, pendente, recusado
 	id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 ####################################################################
@@ -190,15 +190,65 @@ def solicitacao():
 def adm():
 	# remove the username from the session if it's there
 	if 'username' in session and session['username'] != None and session['h'] == "adm":
-		solicitacao = Solicitacao.query.filter_by(status="pendente").order_by("data desc")
+		pessoa = Pessoa.query.filter_by(status="pendente").all()
 		
 		username = Markup(session['username'])
 		flash(username)
-		return render_template('lista.html')
+		return render_template('lista.html', pessoa = pessoa)
 	else:
 		message = Markup("<h1>Voce precisa logar para acessar</h1>")
 		flash(message)
 		return render_template('index.html')
+
+@app.route('/abrir/<idpessoa>', methods=['POST', 'GET'])
+def abrir(idpessoa):
+	# 
+	if 'username' in session and session['username'] != None and session['h'] == "adm":
+		if request.method == 'GET':
+			id_pessoa = idpessoa
+
+			pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+			for i in pessoa:
+				email_data 	= i.email
+				senha_data 	= i.senha
+				nome_data 	= i.nome
+				tipo_data  = i.tipo
+
+			socilicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+			for j in pessoa:
+				mensagem_data 	= j.email
+				data_data 	= j.senha
+
+			return render_template('abrir.html', pessoa = pessoa, solicitacao = solicitacao)
+	else:
+		message = Markup("<h1>Voce precisa logar para acessar</h1>")
+		flash(message)
+		return render_template('index.html')
+
+@app.route('/analise', methods=['POST', 'GET'])
+def analise():
+	if 'username' in session and session['username'] != None and session['h'] == "adm":
+		if request.method == 'GET':
+			condicao = request.form['condicao']
+			id_pessoa = request.form['id_pessoa']
+
+			if condicao == 1:
+				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+				pessoa.status = "aprovado"
+				db.session.commit()
+
+				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+				solicitacao.status = "aprovado"
+				db.session.commit()
+			elif condicao == 0:
+				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+				pessoa.status = "recusado"
+				db.session.commit()
+
+				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+				solicitacao.status = "recusado"
+				db.session.commit()
+
 
 '''
 @app.route('/comodos')

@@ -6,7 +6,7 @@
 #from subprocess import Popen, PIPE
 #from classes.Home import Device
 from flask import Flask, request, session, g, Markup, redirect, url_for, abort, \
-	 render_template, flash, jsonify
+	 render_template, flash, jsonify, escape
 from flask_sqlalchemy import SQLAlchemy
 import socket
 
@@ -98,10 +98,10 @@ def login():
 	if request.method == 'POST':
 		email = request.form['email']
 		senha = request.form['senha']
-		email_data		= None
-		senha_data	= None
-		nome_data		= None
-		tipo_data	= None
+		'''email_data
+		senha_data
+		nome_data
+		tipo_data'''
 		#user = Pessoa.select().where(Pessoa.email == email).first()
 		pessoa = Pessoa.query.filter_by(email=email).all()
 		for i in pessoa:
@@ -109,21 +109,16 @@ def login():
 			senha_data 	= i.senha
 			nome_data 	= i.nome
 			tipo_data  = i.tipo
-		return nome_data
-		if((email_data == email) and (senha_data == senha)):
+
+		if email_data and senha_data and nome_data and tipo_data and email_data == email and senha_data == senha:
 			session['username'] = nome_data
 			session['h'] = tipo_data
-			return nome_data
-			#return redirect(url_for('adm'))
+			#return nome_data
+			return redirect(url_for('adm'))
 		else:
 			message = Markup("<h1>Login invalido</h1>")
 			flash(message)
 			return render_template('index.html')
-		#login = Pessoa.query.filter_by(senha= senha)
-		#if login.email == email and login.senha == senha:
-		#	session['username'] = login.nome
-		#return render_template('teste.html', pessoa = pessoa)
-		#return asd
 	else:
 		return render_template('index.html')
 
@@ -133,7 +128,7 @@ def login():
 @app.route('/logged')
 def logged():
 	if 'username' in session:
-		return session['username']
+		return 'Logado como: %s' % escape(session['username'] + "\n Tipo: " + session['h'])
 	return 'You are not logged in'
 
 
@@ -194,19 +189,11 @@ def solicitacao():
 @app.route('/adm')
 def adm():
 	# remove the username from the session if it's there
-	if 'username' in session and ('h' == "adm"):
-		text = None
-		solicitacao = Solicitacao.query.filter_by(status="pendente").order_by(desc(data))
-		for i in solicitacao:
-			id_data 	= i.id_
-			pessoa = Pessoa.query.filter_by(id_=id_data).all()
-			for j in pessoa:
-				id_data = i.id_
-				nome_data = i.nome
-				email_data = i.email
-				text =+ "<tr><th scope='row'>3</th><td>"+ id_data +"</td><td>"+ nome_data +"</td><td>"+ email_data +"</td><td><a href='/solicitacao_abrir?id='"+ id_data +">Abrir</a></td></tr>"
-		message = Markup(text)
-		flash(message)
+	if 'username' in session and session['username'] != None and session['h'] == "adm":
+		solicitacao = Solicitacao.query.filter_by(status="pendente").order_by("data desc")
+		
+		username = Markup(session['username'])
+		flash(username)
 		return render_template('lista.html')
 	else:
 		message = Markup("<h1>Voce precisa logar para acessar</h1>")
@@ -250,6 +237,7 @@ def setPins():
 			else:
 				disp.onDevice(dispositivo.pin)
 '''
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 if __name__ == '__main__':
 	#app.run(debug = True)
 	#Comando para buscar informações e filtrar o ip

@@ -62,7 +62,9 @@
 	<div class="container" id="container">
 		
 		<div class="row">
-			<div class="col"><h1 class="title">Lista de Solicitantes</h1></div>
+			{% for username in get_flashed_messages() %}
+			<div class="col"><h1 class="title">Lista de Solicitantes - Logado como: {{ username }}</h1></div>
+			{% endfor %}
 		</div>
 		<table class="table">
 			<thead>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Clube Social - Solicitar Associação</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+	<header id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<img src="img/logo.png" class="img-fluid">
+				</div>
+				<div class="col-md-9">
+					<h1 id="title-site" class="display-1">Clube Social</h1>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<!-- <a class="navbar-brand" href="#">Início</a> -->
+	  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    		<span class="navbar-toggler-icon"></span>
+	  		</button>
+
+	  		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    		<ul class="navbar-nav mr-auto">
+	      			<li class="nav-item ">
+	        			<a class="nav-link" href="#">Home</a>
+	      			</li>
+	     			<li class="nav-item">
+	        			<a class="nav-link" href="#">Solicitar associação </a>
+	      			</li>
+	      			<li class="nav-item active">
+	        			<a class="nav-link" href="#">Acessar Boleto <span class="sr-only">(current)</span></a>
+	      			</li>
+	      			<li class="nav-item">
+	        			<a class="nav-link disabled" href="#">Sobre</a>
+	      			</li>
+	    		</ul>
+	    	<form class="form-inline my-2 my-lg-0">
+	      		<input class="form-control mr-sm-1" type="email" placeholder="E-mail" aria-label="Search">
+	      		<input class="form-control mr-sm-1" type="password" placeholder="Senha" aria-label="Search">
+	      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar</button>
+	    	</form>
+    	</div>
+  	</div>
+
+	</nav>
+
+	<div class="container" id="container">
+		<div class="row">
+			<div class="col"><h1 class="title">Acessar Boleto</h1></div>
+		</div>
+		<form id="form" action="/boleto" method="post">
+
+			<div class="row justify-content-center">
+
+				<div class="col-sm-4">
+			  		<label class="form-control-label" for="inputCPF">Insira seu CPF: </label>
+			  		<input type="text" class="form-control" id="inputCPF" name="cpf" placeholder="000.000.000-00">
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center" >
+				<input type="submit" class="btn btn-outline-primary" value="Acessar Boleto"></input>
+			</div>
+		</form>
+	</div>
+
+	<footer id="footer">
+		<p>
+			Desenvolvido por Judison Godinho e Pedro Paulo
+		</p>
+		<p>
+			Todos os direitos reservados
+		</p>
+	</footer>
+
+</body>
+</html>

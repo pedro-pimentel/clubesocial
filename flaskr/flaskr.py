@@ -249,6 +249,12 @@ def analise():
 				solicitacao.status = "recusado"
 				db.session.commit()
 
+@app.route('/boleto', methods=['POST', 'GET'])
+def boleto():
+	if request.method == 'POST':
+		cpf = request.form['cpf']
+		pessoa = Pessoa.query.filter_by(cpf=cpf).all()
+	return render_template('boleto.html', pessoa = pessoa)
 
 '''
 @app.route('/comodos')

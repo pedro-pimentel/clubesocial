@@ -47,7 +47,7 @@ class Dependente(db.Model):
 	nome = db.Column(db.String(50))
 	name = db.Column(db.Integer)
 	status = db.Column(db.Integer)
-	id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+	id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 class Mensalidade(db.Model):
 	id_ = db.Column(db.Integer, primary_key=True)
@@ -55,7 +55,7 @@ class Mensalidade(db.Model):
 	data_pagamento = db.Column(db.DateTime)
 	valor_pago = db.Column(db.Integer)
 	mensalidade = db.Column(db.String(50))
-	id_room = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
+	id_pessoa = db.Column(db.Integer, db.ForeignKey('pessoa.id_'))
 
 class Solicitacao(db.Model):
 	id_ = db.Column(db.Integer, primary_key=True)
@@ -66,32 +66,6 @@ class Solicitacao(db.Model):
 
 ####################################################################
 ####################################################################
-#########Funcao de render do template index###################################
-'''@app.route('/')
-def main():
-
-	return render_template('index.html')
-
-
-@app.route('/index')
-def index():
-	return render_template('index.html')'''
-
-##################################################################
-#########Funcao de Login###############
-
-
-'''@app.route('/login', methods=['GET', 'POST'])
-def login():
-	if request.method == 'POST':
-		session['username'] = request.form['username']
-		return redirect(url_for('index'))
-	return
-		#<form method="post">
-		#	<p><input type=text name=username>
-		#	<p><input type=submit value=Login>
-		#</form>
-'''
 
 @app.route('/login',  methods=['POST', 'GET'])
 def login():
@@ -183,8 +157,8 @@ def solicitacao():
 	else:
 		return render_template('index.html')
 
-#######################################)#########################
-##################Funcao de aprovacao#####################
+###################################################################################################################
+####################################Funcao de aprovacao############################################################
 
 @app.route('/adm')
 def adm():
@@ -199,6 +173,10 @@ def adm():
 		message = Markup("<h1>Voce precisa logar para acessar</h1>")
 		flash(message)
 		return render_template('index.html')
+
+
+###################################################################################################################
+####################################Funcao Abrir solicitacao#######################################################
 
 @app.route('/abrir/<idpessoa>', methods=['POST', 'GET'])
 def abrir(idpessoa):
@@ -225,6 +203,9 @@ def abrir(idpessoa):
 		flash(message)
 		return render_template('index.html')
 
+###################################################################################################################
+####################################Funcao Analise#################################################################
+
 @app.route('/analise', methods=['POST', 'GET'])
 def analise():
 	if 'username' in session and session['username'] != None and session['h'] == "adm":
@@ -249,6 +230,8 @@ def analise():
 				solicitacao.status = "recusado"
 				db.session.commit()
 
+###################################################################################################################
+####################################Funcao Boleto##################################################################
 @app.route('/boleto')
 def boleto():
 	return render_template('acesso_boleto.html')
@@ -266,43 +249,8 @@ def abrirboleto():
 		flash(message)
 		return render_template('acesso_boleto.html')
 
-'''
-@app.route('/comodos')
-def comdos():
-	return render_template('comodos.html')
 
-@app.route('/info')
-def info():
-	return render_template('info.html')
-
-@app.route('/add_device', methods=['GET', 'POST'])
-def add_device():
-	if request.method == 'POST':
-		dispositivos = Devices(name=request.form['dispositivo'],pin=request.form['pin'],status=0, id_room=request.form['cm'])
-		db.session.add(dispositivos)
-		db.session.commit()
-	return render_template('add_device.html', comodo = Rooms.query.all())
-
-@app.route('/add_room', methods=['GET', 'POST'])
-def add_room():
-	if request.method == 'POST':
-		comodos = Rooms(name=request.form['comodo'])
-		db.session.add(comodos)
-		db.session.commit()
-	return render_template('add_room.html')
-
-
-#@app.cli.command('initpin')
-def setPins():
-	dispositivos = Devices.query.all()
-	if dispositivos:
-		for dispositivo in dispositivos:
-			disp = Device(dispositivo.pin)
-			if dispositivo.status == 0:
-				disp.offDevice(dispositivo.pin)
-			else:
-				disp.onDevice(dispositivo.pin)
-'''
+################################################################################################################
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 if __name__ == '__main__':
 	#app.run(debug = True)

@@ -69,23 +69,23 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
   <TR>
     <TD colspan=4 class=BoletoLogo><img src='../static/img/104.jpg'></TD>
     <TD colspan=2 class=BoletoCodigoBanco>104-0</TD>
-    <TD colspan=6 class=BoletoLinhaDigitavel>LinhaDigitavel</TD>
+    <TD colspan=6 class=BoletoLinhaDigitavel>5546 21 4521 54 212121 1520 25 100 2151 2 15151</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Local de Pagamento</TD>
     <TD class=BoletoTituloDireito>Vencimento</TD>
   </TR>
   <TR>
-    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>LocalDePagamento</TD>
-    <TD class=BoletoValorDireito>Vencimento</TD>
+    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Loterica</TD>
+    <TD class=BoletoValorDireito>05/10/2017</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Cedente</TD>
     <TD class=BoletoTituloDireito>Agência/Código do Cedente</TD>
   </TR>
   <TR>
-    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Cedente</TD>
-    <TD class=BoletoValorDireito>AgenciaCodDoCedente</TD>
+    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Clube Social</TD>
+    <TD class=BoletoValorDireito>658215-8</TD>
   </TR>
   <TR>
     <TD colspan=3 class=BoletoTituloEsquerdo>Data do Documento</TD>
@@ -96,12 +96,12 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD class=BoletoTituloDireito>Nosso Número</TD>
   </TR>
   <TR>
-    <TD colspan=3 class=BoletoValorEsquerdo>DataDoDoc</TD>
-    <TD colspan=4 class=BoletoValorEsquerdo>NumeroDodoc</TD>
+    <TD colspan=3 class=BoletoValorEsquerdo>27/09/2017</TD>
+    <TD colspan=4 class=BoletoValorEsquerdo>65131 55 5121215 55 421 2</TD>
     <TD class=BoletoValorEsquerdo>RC</TD>
     <TD class=BoletoValorEsquerdo>N</TD>
     <TD class=BoletoValorEsquerdo>DataDoProces</TD>
-    <TD class=BoletoValorDireito>NossoNumero</TD>
+    <TD class=BoletoValorDireito>1615666225-8</TD>
   </TR>
   <TR>
     <TD colspan=3 class=BoletoTituloEsquerdo>Uso do Banco</TD>
@@ -117,7 +117,7 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD colspan=2 class=BoletoValorEsquerdo>R$</TD>
     <TD colspan=2 class=BoletoValorEsquerdo>&nbsp;</TD>
     <TD class=BoletoValorEsquerdo>&nbsp;</TD>
-    <TD class=BoletoValorDireito>ValorDocumento</TD>
+    <TD class=BoletoValorDireito>R$ 50,00</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Instruco</TD>
@@ -146,25 +146,25 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD class=BoletoValorDireito>&nbsp;</TD>
   </TR>
   <TR>
-    <TD class=BoletoTituloDireito>(=) Valor Cobrado</TD>
+    <TD class=BoletoTituloDireito>(=) R$ 50,00</TD>
   </TR>
   <TR>
     <TD class=BoletoValorDireito>&nbsp;</TD>
   </TR>
   <TR>
     <TD rowspan=3 Class=BoletoTituloSacado>Sacado:</TD>
-    <TD colspan=8 Class=BoletoValorSacado>NomedoSacado</TD>
-    <TD colspan=2 Class=BoletoValorSacado>CpfDoSacado</TD>
+    <TD colspan=8 Class=BoletoValorSacado>{{ pessoa.nome }}</TD>
+    <TD colspan=2 Class=BoletoValorSacado>{{ pessoa.cpf }}</TD>
   </TR>
   <TR>
-    <TD colspan=10 Class=BoletoValorSacado>RuaNumeroBairro</TD>
+    <TD colspan=10 Class=BoletoValorSacado>{{ pessoa.endereco }}</TD>
   </TR>
   <TR>
-    <TD colspan=10 Class=BoletoValorSacado>CidadeUf&nbsp;&nbsp;&nbsp;CEP</TD>
+    <TD colspan=10 Class=BoletoValorSacado>Santarem - PA</TD>
   </TR>
   <TR>
     <TD colspan=2 Class=BoletoTituloSacador>Sacador / Avalista:</TD>
-    <TD colspan=9 Class=BoletoValorSacador>NomeSacador</TD>
+    <TD colspan=9 Class=BoletoValorSacador>Clube Social</TD>
   </TR>
   <TR>
     <TD colspan=11 class=BoletoTituloDireito style='text-align: right; padding-right: 0.1cm'>Recibo do Sacado - Autenticação Mecânica</TD>
@@ -176,23 +176,23 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
   <TR>
     <TD colspan=4 class=BoletoLogo><img src='../static/img/104.jpg'></TD>
     <TD colspan=2 class=BoletoCodigoBanco>104-0</TD>
-    <TD colspan=6 class=BoletoLinhaDigitavel>LinhaDigitavel</TD>
+    <TD colspan=6 class=BoletoLinhaDigitavel>5546 21 4521 54 212121 1520 25 100 2151 2 15151</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Local de Pagamento</TD>
     <TD class=BoletoTituloDireito>Vencimento</TD>
   </TR>
   <TR>
-    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>LocalDePagamento</TD>
-    <TD class=BoletoValorDireito>Vencimento</TD>
+    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Loterica</TD>
+    <TD class=BoletoValorDireito>05/10/2017</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Cedente</TD>
     <TD class=BoletoTituloDireito>Agência/Código do Cedente</TD>
   </TR>
   <TR>
-    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Cedente</TD>
-    <TD class=BoletoValorDireito>AgenciCodDoCedente</TD>
+    <TD colspan=10 class=BoletoValorEsquerdo style='text-align: left; padding-left : 0.1cm'>Clube Social</TD>
+    <TD class=BoletoValorDireito>658215-8</TD>
   </TR>
   <TR>
     <TD colspan=3 class=BoletoTituloEsquerdo>Data do Documento</TD>
@@ -203,12 +203,12 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD class=BoletoTituloDireito>Nosso Número</TD>
   </TR>
   <TR>
-    <TD colspan=3 class=BoletoValorEsquerdo>DataDoDoc</TD>
-    <TD colspan=4 class=BoletoValorEsquerdo>NumeroDodoc</TD>
+    <TD colspan=3 class=BoletoValorEsquerdo>27/09/2017</TD>
+    <TD colspan=4 class=BoletoValorEsquerdo>65131 55 5121215 55 421 2</TD>
     <TD class=BoletoValorEsquerdo>RC</TD>
     <TD class=BoletoValorEsquerdo>N</TD>
     <TD class=BoletoValorEsquerdo>DataDoProces</TD>
-    <TD class=BoletoValorDireito>NossoNumero</TD>
+    <TD class=BoletoValorDireito>1615666225-8</TD>
   </TR>
   <TR>
     <TD colspan=3 class=BoletoTituloEsquerdo>Uso do Banco</TD>
@@ -224,7 +224,7 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD colspan=2 class=BoletoValorEsquerdo>R$</TD>
     <TD colspan=2 class=BoletoValorEsquerdo>&nbsp;</TD>
     <TD class=BoletoValorEsquerdo>&nbsp;</TD>
-    <TD class=BoletoValorDireito>ValorDocumento</TD>
+    <TD class=BoletoValorDireito>R$ 50,00</TD>
   </TR>
   <TR>
     <TD colspan=10 class=BoletoTituloEsquerdo>Instruco</TD>
@@ -253,28 +253,26 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD class=BoletoValorDireito>&nbsp;</TD>
   </TR>
   <TR>
-    <TD class=BoletoTituloDireito>(=) Valor Cobrado</TD>
+    <TD class=BoletoTituloDireito>(=) R$ 50,00</TD>
   </TR>
   <TR>
     <TD class=BoletoValorDireito>&nbsp;</TD>
   </TR>
-    {% for m in pessoa %}
   <TR>
     <TD rowspan=3 Class=BoletoTituloSacado>Sacado:</TD>
-    <TD colspan=8 Class=BoletoValorSacado>NomedoSacado</TD>
-    <TD colspan=2 Class=BoletoValorSacado>CpfDoSacado</TD>
+    <TD colspan=8 Class=BoletoValorSacado>{{ pessoa.nome }}</TD>
+    <TD colspan=2 Class=BoletoValorSacado>{{ pessoa.cpf }}</TD>
   </TR>
   <TR>
-    <TD colspan=10 Class=BoletoValorSacado>RuaNumeroBairro</TD>
+    <TD colspan=10 Class=BoletoValorSacado>{{ pessoa.endereco }}</TD>
   </TR>
   <TR>
-    <TD colspan=10 Class=BoletoValorSacado>CidadeUf&nbsp;&nbsp;&nbsp;CEP</TD>
+    <TD colspan=10 Class=BoletoValorSacado>Santarem - PA</TD>
   </TR>
   <TR>
     <TD colspan=2 Class=BoletoTituloSacador>Sacador / Avalista:</TD>
-    <TD colspan=9 Class=BoletoValorSacador>NomeSacador</TD>
+    <TD colspan=9 Class=BoletoValorSacador>Clube Social</TD>
   </TR>
-    {% endfor %}
   <TR>
     <TD colspan=11 class=BoletoTituloDireito style='text-align: right; padding-right: 0.1cm'>Ficha de Compensação - Autenticação Mecânica</TD>
   </TR>

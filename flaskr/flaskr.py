@@ -144,7 +144,7 @@ def solicitacao():
 		trabalho  = request.form['trabalho']
 		mensagem  = request.form['mensagem']
 
-		pessoa = Pessoa(nome=nome,email=email,endereco=endereco, contato=contato, rg = rg, cpf = cpf, renda = renda, profissao = profissao, trabalho = trabalho, tipo = "associado")
+		pessoa = Pessoa(nome=nome,email=email,endereco=endereco, contato=contato, rg = rg, cpf = cpf, renda = renda, profissao = profissao, trabalho = trabalho, status = "pendente", tipo = "ingressante")
 		db.session.add(pessoa)
 		db.session.commit()
 		id_last = pessoa.id_
@@ -186,17 +186,20 @@ def abrir(idpessoa):
 			id_pessoa = idpessoa
 
 			pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+
 			for i in pessoa:
 				email_data 	= i.email
 				senha_data 	= i.senha
 				nome_data 	= i.nome
 				tipo_data  = i.tipo
 
-			socilicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
-			for j in pessoa:
-				mensagem_data 	= j.email
-				data_data 	= j.senha
+			solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+			# for j in pessoa:
+			# 	mensagem_data 	= j.email
+			# 	data_data 	= j.senha
 
+			# return email_data
+			# retorno = {"pessoa"}
 			return render_template('abrir.html', pessoa = pessoa, solicitacao = solicitacao)
 	else:
 		message = Markup("<h1>Voce precisa logar para acessar</h1>")
@@ -209,27 +212,37 @@ def abrir(idpessoa):
 @app.route('/analise', methods=['POST', 'GET'])
 def analise():
 	if 'username' in session and session['username'] != None and session['h'] == "adm":
-		if request.method == 'GET':
+		if request.method == 'POST':
 			condicao = request.form['condicao']
 			id_pessoa = request.form['id_pessoa']
 
-			if condicao == 1:
-				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+			if condicao == "1":
+				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).first()
+				pessoa.tipo = "associado"
 				pessoa.status = "aprovado"
 				db.session.commit()
 
-				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).first()
 				solicitacao.status = "aprovado"
 				db.session.commit()
-			elif condicao == 0:
-				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).all()
+				message = Markup("<h1>Aprovado</h1>")
+				flash(message)
+			elif condicao == "0":
+				pessoa = Pessoa.query.filter_by(id_ = id_pessoa).first()
 				pessoa.status = "recusado"
 				db.session.commit()
 
-				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).all()
+				solicitacao = Solicitacao.query.filter_by(id_pessoa = id_pessoa).first()
 				solicitacao.status = "recusado"
 				db.session.commit()
+				message = Markup("<h1>Recusado</h1>")
+				flash(message)
+			return redirect(url_for('adm'))
 
+		else:
+			message = Markup("<h1>Erro</h1>")
+			flash(message)
+			return redirect(url_for('adm'))
 ###################################################################################################################
 ####################################Funcao Boleto##################################################################
 @app.route('/boleto')
@@ -241,7 +254,7 @@ def boleto():
 def abrirboleto():
 	if request.method == 'POST':
 		cpf = request.form['cpf']
-		pessoa = Pessoa.query.filter_by(cpf=cpf).all()
+		pessoa = Pessoa.query.filter_by(cpf=cpf).first()
 		return render_template('boleto.html', pessoa = pessoa)
 
 	else:

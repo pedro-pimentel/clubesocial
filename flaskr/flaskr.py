@@ -249,12 +249,22 @@ def analise():
 				solicitacao.status = "recusado"
 				db.session.commit()
 
-@app.route('/boleto', methods=['POST', 'GET'])
+@app.route('/boleto')
 def boleto():
+	return render_template('acesso_boleto.html')
+
+
+@app.route('/boleto/abrir', methods=['POST', 'GET'])
+def abrirboleto():
 	if request.method == 'POST':
 		cpf = request.form['cpf']
 		pessoa = Pessoa.query.filter_by(cpf=cpf).all()
-	return render_template('boleto.html', pessoa = pessoa)
+		return render_template('boleto.html', pessoa = pessoa)
+
+	else:
+		message = Markup("<h1>Voce precisa logar para acessar</h1>")
+		flash(message)
+		return render_template('acesso_boleto.html')
 
 '''
 @app.route('/comodos')

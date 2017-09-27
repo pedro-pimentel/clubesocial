@@ -258,6 +258,7 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
   <TR>
     <TD class=BoletoValorDireito>&nbsp;</TD>
   </TR>
+    {% for m in pessoa %}
   <TR>
     <TD rowspan=3 Class=BoletoTituloSacado>Sacado:</TD>
     <TD colspan=8 Class=BoletoValorSacado>NomedoSacado</TD>
@@ -273,6 +274,7 @@ ul.BoletoInstrucoes{font-size : 3mm; font-family : verdana, arial}
     <TD colspan=2 Class=BoletoTituloSacador>Sacador / Avalista:</TD>
     <TD colspan=9 Class=BoletoValorSacador>NomeSacador</TD>
   </TR>
+    {% endfor %}
   <TR>
     <TD colspan=11 class=BoletoTituloDireito style='text-align: right; padding-right: 0.1cm'>Ficha de Compensação - Autenticação Mecânica</TD>
   </TR>
